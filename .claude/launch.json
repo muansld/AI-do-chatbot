@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "aido-prototype",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["-e", "const h=require('http'),f=require('fs'),p=require('path');h.createServer((q,s)=>{const u=decodeURIComponent(q.url.split('?')[0]);const fp=p.join(process.cwd(),u==='/'?'index.html':u);f.readFile(fp,(e,d)=>{if(e){s.writeHead(404);return s.end('not found')}s.writeHead(200,{'Content-Type':fp.endsWith('.html')?'text/html; charset=utf-8':'application/octet-stream'});s.end(d)})}).listen(5173,()=>console.log('http://localhost:5173'))"],
+      "port": 5173
+    }
+  ]
+}

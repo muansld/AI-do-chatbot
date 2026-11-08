@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIDO 홈페이지 시안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text-primary:#1A1B25; --text-secondary:#6B6E80; --text-tertiary:#999CAB; --text-inverse:#FFFFFF;
+  --bg-surface:#FFFFFF; --bg-subtle:#F5F7FC; --bg-muted:#EEEDF3; --bg-neutral:#F2F2F5;
+  --border-default:#E7E6EE; --border-strong:#D9D9E0;
+  --brand-primary:#2F6BFF; --brand-strong:#1C4DCC; --brand-subtle:#EAF0FF; --brand-faint:#F6F9FF;
+  --emp:#C77805; --emp-subtle:#FFF4DB; --start:#1F9966; --start-subtle:#E5F7ED;
+  --danger:#D94D4D; --danger-subtle:#FFEDED; --warn-subtle:#FFEDCC;
+  --shadow-sm:0 1px 3px rgba(26,31,77,.10); --shadow-md:0 4px 16px rgba(26,31,77,.06); --shadow-lg:0 12px 32px rgba(26,31,77,.10);
+  --gutter:120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text-primary);background:var(--bg-surface);line-height:1.5;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* Header */
+.gnb{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px;padding:0 40px;background:var(--bg-surface);border-bottom:1px solid var(--border-default)}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--brand-primary);display:grid;place-items:center;color:#fff}
+.logo b{display:block;font-size:16px;line-height:1.2}
+.logo small{display:block;font-size:11px;color:var(--text-secondary)}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;color:var(--text-secondary);white-space:nowrap}
+.nav a:hover{background:var(--bg-subtle)}
+.nav a.on{background:var(--brand-subtle);color:var(--brand-strong);font-weight:700}
+.seg{display:flex;padding:3px;border-radius:999px;background:var(--bg-neutral);flex-shrink:0}
+.seg button{padding:5px 12px;border-radius:999px;font-size:13px;font-weight:500;color:var(--text-secondary)}
+.seg button.on{background:var(--bg-surface);color:var(--text-primary);font-weight:700;box-shadow:var(--shadow-sm)}
+
+/* Common */
+.page{display:none}
+.page.on{display:block}
+.wrap{padding:0 var(--gutter)}
+.ph{padding-top:48px;padding-bottom:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.ph h1{font-size:32px;line-height:1.35}
+.ph p{color:var(--text-secondary);font-size:16px;margin-top:6px}
+h2{font-size:26px;line-height:1.35}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:700;white-space:nowrap}
+.btn.primary{background:var(--brand-primary);color:#fff}
+.btn.primary:hover{background:var(--brand-strong)}
+.btn.secondary{background:var(--bg-surface);border:1px solid var(--border-strong)}
+.btn.secondary:hover{background:var(--bg-subtle)}
+.btn.block{width:100%}
+.chip{padding:9px 16px;border-radius:999px;font-size:14px;font-weight:500;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border-default);white-space:nowrap}
+.chip:hover{border-color:var(--border-strong)}
+.chip.on{background:var(--text-primary);border-color:var(--text-primary);color:#fff;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:500;background:var(--bg-muted);color:var(--text-secondary);white-space:nowrap}
+.tag.brand{background:var(--brand-subtle);color:var(--brand-strong)}
+.tag.emp{background:var(--emp-subtle);color:var(--emp)}
+.tag.start{background:var(--start-subtle);color:var(--start)}
+.tag.warn{background:var(--warn-subtle);color:var(--emp)}
+.card{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:16px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:24px}
+.search{display:flex;align-items:center;gap:8px;width:420px;max-width:100%;padding:11px 16px;border:1px solid var(--border-default);border-radius:12px;color:var(--text-tertiary)}
+.search input{border:0;outline:0;flex:1;min-width:0;font-size:14px;color:var(--text-primary)}
+.search input::placeholder{color:var(--text-tertiary)}
+.callout{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;border-radius:12px;background:var(--warn-subtle);font-size:14px;margin-bottom:24px}
+.callout b{color:var(--emp);white-space:nowrap}
+.section{padding-top:64px;padding-bottom:64px}
+.muted{color:var(--text-secondary)}
+.empty{display:none;padding:40px;text-align:center;color:var(--text-tertiary)}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:32px var(--gutter);background:var(--bg-subtle);font-size:13px;color:var(--text-tertiary)}
+footer b{font-weight:500;color:var(--text-secondary)}
+.toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text-primary);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;transition:.2s;z-index:50;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* Composer */
+.composer{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:20px;padding:20px;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;gap:20px;width:100%}
+.composer textarea{border:0;outline:0;resize:none;font-size:16px;height:26px}
+.composer textarea::placeholder{color:var(--text-tertiary)}
+.composer .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.composer .src{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary)}
+.send{width:40px;height:40px;border-radius:999px;background:var(--brand-primary);color:#fff;display:grid;place-items:center;flex-shrink:0}
+
+/* Home */
+#p-home.on{min-height:calc(100vh - 72px);display:flex;flex-direction:column;background:radial-gradient(ellipse 50% 40% at 45% 48%,rgba(47,107,255,.10),transparent 70%),radial-gradient(ellipse 40% 35% at 60% 55%,rgba(64,170,255,.08),transparent 70%),var(--bg-subtle)}
+body[data-page=home] footer{display:none}
+.home-note{padding:24px 16px;text-align:center;font-size:12px;color:var(--text-tertiary)}
+.hero{flex:1;justify-content:center;padding:48px var(--gutter);display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:var(--brand-subtle);color:var(--brand-strong);font-size:13px;font-weight:700}
+.pill::before{content:"";width:6px;height:6px;border-radius:99px;background:var(--brand-primary)}
+.hero h1{font-size:40px;line-height:1.3}
+.hero p{font-size:16px;color:var(--text-secondary)}
+.hero .composer{max-width:680px;margin-top:20px;text-align:left}
+.hero .chips{margin-top:4px}
+.hero .chips{justify-content:center}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.ev{padding:20px;display:flex;flex-direction:column;gap:8px}
+.ev .top{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;color:var(--text-secondary)}
+.ev b{font-size:17px}
+.ev small{font-size:13px;color:var(--text-tertiary)}
+.ql{background:var(--bg-subtle);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:.15s}
+.ql:hover{box-shadow:var(--shadow-md);background:var(--bg-surface)}
+.ql .ib{width:44px;height:44px;border-radius:12px;background:var(--brand-subtle);color:var(--brand-strong);display:grid;place-items:center}
+.ql .ib svg{width:22px;height:22px}
+.ql b{font-size:18px}
+.ql p{font-size:14px;color:var(--text-secondary);flex:1}
+.go{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--brand-primary)}
+
+/* Ask */
+.ask{display:flex;min-height:calc(100vh - 72px)}
+.hist{width:280px;flex-shrink:0;background:var(--bg-subtle);padding:24px;display:flex;flex-direction:column;gap:12px}
+.hist .lbl{font-size:12px;font-weight:700;color:var(--text-tertiary);margin-top:8px}
+.hist a{padding:10px 12px;border-radius:10px;font-size:14px;color:var(--text-secondary)}
+.hist a.on{background:var(--brand-subtle);color:var(--brand-strong);font-weight:700}
+.thread{flex:1;display:flex;justify-content:center;padding:40px 24px}
+.col{width:800px;max-width:100%;display:flex;flex-direction:column;gap:24px}
+.umsg{align-self:flex-end;background:var(--bg-muted);padding:12px 18px;border-radius:18px;font-size:15px;max-width:80%}
+.amsg{display:flex;gap:12px}
+.av{width:32px;height:32px;border-radius:10px;background:var(--brand-primary);color:#fff;display:grid;place-items:center;flex-shrink:0}
+.abody{flex:1;display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.65;min-width:0}
+.cite{background:var(--bg-subtle);border:1px solid var(--border-default);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.cite .h{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--brand-strong)}
+.cite q{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.cite a{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--brand-primary)}
+.fb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--text-tertiary)}
+.fb .chip{padding:6px 12px;font-size:13px}
+.fb .sp{flex:1}
+.fb a{display:inline-flex;align-items:center;gap:2px;font-weight:700;color:var(--text-secondary)}
+.lbl2{font-size:12px;font-weight:700;color:var(--text-tertiary);margin-bottom:8px}
+.col .composer{margin-top:auto}
+
+/* Schedule */
+.legend{display:flex;gap:16px;font-size:13px;font-weight:500;color:var(--text-secondary)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:99px}
+.sched{display:grid;grid-template-columns:1fr 400px;gap:24px;padding-bottom:72px;align-items:start}
+.cal{padding:24px}
+.cal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-h b{font-size:20px}
+.cal-h .nv{display:flex;gap:8px}
+.cal-h .nv button{width:32px;height:32px;border-radius:99px;border:1px solid var(--border-default);display:grid;place-items:center;color:var(--text-secondary)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-grid .wd{padding:8px 0;text-align:center;font-size:12px;font-weight:700;color:var(--text-tertiary)}
+.cal-grid .wd.sun{color:var(--danger)}
+.day{min-height:104px;border-top:1px solid var(--border-default);padding:8px;display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:500;min-width:0}
+.day.sun>span{color:var(--danger)}
+.day.today{background:var(--brand-faint)}
+.day.today>span{width:24px;height:24px;border-radius:99px;background:var(--brand-primary);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.evt{padding:3px 6px;border-radius:4px;font-size:11px;line-height:1.3;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.evt.brand{background:var(--brand-subtle);color:var(--brand-strong)}
+.evt.emp{background:var(--emp-subtle);color:var(--emp)}
+.evt.start{background:var(--start-subtle);color:var(--start)}
+.evt:hover{filter:brightness(.96)}
+.side{display:flex;flex-direction:column;gap:16px}
+.steps{padding:24px;display:flex;flex-direction:column;gap:20px}
+.steps .h{display:flex;justify-content:space-between;align-items:center}
+.steps .h b{font-size:18px}
+.step{display:flex;gap:12px}
+.num{width:28px;height:28px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0;color:var(--text-secondary);border:1px solid var(--border-strong)}
+.num.done{background:var(--bg-muted);border-color:var(--bg-muted)}
+.num.now{background:var(--brand-primary);border-color:var(--brand-primary);color:#fff}
+.step .t{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+.step p{font-size:13px;color:var(--text-secondary)}
+.gcal{background:var(--brand-faint);border:1px solid var(--brand-subtle);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.gcal .h{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700}
+.gcal .h svg{width:18px;height:18px;color:var(--brand-strong)}
+.gstep{display:flex;align-items:center;gap:10px;font-size:14px}
+.gstep i{width:22px;height:22px;border-radius:99px;background:var(--brand-subtle);color:var(--brand-strong);font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center;flex-shrink:0}
+.gcal small{font-size:12px;color:var(--text-secondary)}
+
+/* Seniors */
+.senior{padding:24px;display:flex;flex-direction:column;gap:14px}
+.senior .who{display:flex;align-items:center;gap:12px}
+.ava{width:44px;height:44px;border-radius:99px;background:var(--brand-subtle);color:var(--brand-strong);display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.senior .who b{display:block;font-size:16px}
+.senior .who small{font-size:13px;color:var(--text-secondary)}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--text-secondary)}
+.path span+span::before{content:"→";margin-right:4px;color:var(--text-tertiary)}
+.senior q{font-size:14px;flex:1}
+.match{background:var(--bg-subtle);padding:56px var(--gutter);display:grid;grid-template-columns:1fr 520px;gap:40px;align-items:start}
+.match h2{margin-bottom:8px}
+.mstep{display:flex;gap:14px;margin-top:20px}
+.mstep .num{background:var(--bg-surface)}
+.mstep b{display:block;font-size:15px}
+.mstep p{font-size:14px;color:var(--text-secondary)}
+.form{padding:28px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-md)}
+.form label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.form textarea,.form input,.form select{width:100%;border:1px solid var(--border-default);border-radius:10px;padding:11px 14px;font-size:14px;outline:0;background:var(--bg-surface)}
+.form textarea{height:112px;resize:vertical}
+.form :is(textarea,input,select):focus{border-color:var(--brand-primary)}
+.form small{font-size:12px;color:var(--text-tertiary);text-align:center}
+.form .seg{display:inline-flex}
+
+/* Companies */
+.co{padding:24px;display:flex;flex-direction:column;gap:12px}
+.co .top{display:flex;justify-content:space-between;align-items:flex-start}
+.logo-ph{width:56px;height:56px;border-radius:12px;background:var(--bg-muted);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--text-tertiary)}
+.co b{font-size:17px}
+.co p{font-size:14px;color:var(--text-secondary);flex:1}
+.co .tags{display:flex;gap:6px;flex-wrap:wrap}
+.note{margin:24px 0 72px;padding:16px 20px;border-radius:12px;background:var(--bg-subtle);font-size:14px;color:var(--text-secondary)}
+
+/* FAQ */
+.faq{border-top:1px solid var(--border-default)}
+.qa{border-bottom:1px solid var(--border-default)}
+.qa button{width:100%;display:flex;align-items:center;gap:12px;padding:20px 4px;text-align:left}
+.qa .q{font-size:16px;font-weight:700;color:var(--brand-primary)}
+.qa .qt{flex:1;font-size:16px;font-weight:700}
+.qa .chev{transition:.2s;color:var(--text-tertiary)}
+.qa.open .chev{transform:rotate(180deg)}
+.qa .a{display:none;padding:0 4px 24px 32px;font-size:15px;color:var(--text-secondary);line-height:1.7}
+.qa.open .a{display:block}
+.qa .meta{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:12px;color:var(--text-tertiary)}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:40px 0 72px;padding:32px;border-radius:16px;background:var(--brand-faint)}
+.cta b{font-size:20px;display:block}
+.cta p{font-size:14px;color:var(--text-secondary)}
+
+/* Tabs, notices, guide */
+.tag.danger{background:var(--danger-subtle);color:var(--danger)}
+.notice-strip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--bg-surface);border:1px solid var(--border-default);box-shadow:var(--shadow-sm);font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px}
+.notice-strip:hover{border-color:var(--border-strong)}
+.tabs{display:flex;gap:28px;border-bottom:1px solid var(--border-default);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{display:inline-flex;align-items:center;gap:6px;padding:14px 0 12px;font-size:15px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;white-space:nowrap;margin-bottom:-1px}
+.tabs a.on{color:var(--text-primary);font-weight:700;border-color:var(--text-primary)}
+.tabs.sub{padding-top:16px}
+.new-dot{width:6px;height:6px;border-radius:99px;background:var(--danger)}
+.gpane{display:none;padding-top:24px}
+.gpane.on{display:block}
+.nitem{display:flex;align-items:flex-start;gap:14px;padding:18px 4px;border-bottom:1px solid var(--border-default)}
+a.nitem:hover b{text-decoration:underline}
+.nitem>div{flex:1;min-width:0}
+.nitem b{display:block;font-size:16px}
+.nitem small{display:block;font-size:14px;color:var(--text-secondary);margin-top:2px}
+.nitem time{font-size:13px;color:var(--text-tertiary);white-space:nowrap}
+.nitem .tag{margin-top:2px}
+.start{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.checklist,.rules{padding:24px;display:flex;flex-direction:column;gap:4px}
+.checklist .h,.rules .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.checklist .h b,.rules .h b{font-size:18px}
+.checklist label{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--border-default);font-size:15px;font-weight:500;cursor:pointer}
+.checklist input{width:18px;height:18px;accent-color:var(--brand-primary)}
+.checklist label:has(input:checked){color:var(--text-tertiary);text-decoration:line-through}
+.checklist small,.checklist a{font-size:13px;font-weight:400;color:var(--text-tertiary);text-decoration:none}
+.checklist a{color:var(--brand-primary);font-weight:500}
+.rules a{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border-default)}
+.rules a:hover b{color:var(--brand-strong)}
+.rules i{width:24px;height:24px;border-radius:99px;background:var(--brand-subtle);color:var(--brand-strong);font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center;flex-shrink:0}
+.rules b{display:block;font-size:15px}
+.rules small{font-size:13px;color:var(--text-secondary)}
+.frow{display:grid;grid-template-columns:1.1fr 1.4fr 1.2fr auto;gap:16px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--border-default);font-size:14px;color:var(--text-secondary)}
+.frow b{font-size:15px;color:var(--text-primary)}
+.frow .btn{padding:8px 14px;font-size:13px}
+.fhead{font-size:12px;font-weight:700;color:var(--text-tertiary);padding-top:0}
+.contact{padding:24px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.contact b{font-size:17px;margin-top:6px}
+.contact p{font-size:14px;color:var(--text-secondary)}
+.contact small{font-size:13px;color:var(--text-tertiary)}
+.contact.ai{background:var(--brand-faint);border-color:var(--brand-subtle)}
+.contact .go{margin-top:6px}
+.need{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--text-tertiary)}
+.need .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font-size:13px;color:var(--brand-strong);border-color:var(--brand-subtle);background:var(--brand-faint)}
+.evt.chg{box-shadow:inset 0 0 0 1px var(--danger)}
+.evt.chg::before{content:"변경 ";font-weight:700;color:var(--danger)}
+footer a{color:var(--text-secondary);font-weight:500}
+footer a:hover{text-decoration:underline}
+
+/* Responsive */
+@media (max-width:1100px){
+  .start{grid-template-columns:1fr}
+  :root{--gutter:40px}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .sched,.match{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  :root{--gutter:16px}
+  .gnb{height:auto;flex-wrap:wrap;padding:12px 16px;gap:10px}
+  .nav{order:3;width:100%;margin:0 -16px;padding:0 16px}
+  .g4,.g3{grid-template-columns:1fr}
+  .hero{padding-top:32px;padding-bottom:32px}
+  .hero h1{font-size:28px}
+  .composer textarea{height:48px}
+  .hero p{font-size:15px}
+  .hero .chips{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:100%;scrollbar-width:none}
+  .ph h1{font-size:26px}
+  .hist{display:none}
+  .thread{padding:24px 16px}
+  .day{min-height:64px;padding:4px}
+  .evt{font-size:0;height:6px;padding:0}
+  .cal{padding:16px}
+  .match{padding:40px 16px}
+  .form{padding:20px}
+  .search{width:100%}
+  .qa .a{padding-left:4px}
+  .frow{grid-template-columns:1fr auto;gap:4px 12px}
+  .frow>span{grid-column:1}
+  .frow .btn{grid-column:2;grid-row:1 / span 3}
+  .fhead{display:none}
+  .nitem{flex-wrap:wrap;gap:8px 12px}
+  .nitem>div{flex-basis:100%;order:3}
+  .notice-strip{font-size:12px;max-width:100%}
+  .tabs{gap:20px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-l" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-bld" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-ref" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></symbol>
+</svg>
+
+<header class="gnb">
+  <a class="logo" href="#home"><span class="mark"><svg class="i" style="width:18px;height:18px"><use href="#i-spark"/></svg></span><span><b>AIDO</b><small>탐나는 인재 길잡이</small></span></a>
+  <nav class="nav" id="nav">
+    <a href="#home" data-p="home">홈</a><a href="#ask" data-p="ask">AI에게 묻기</a><a href="#schedule" data-p="schedule">커리큘럼·일정</a><a href="#guide" data-p="guide">센터 안내</a><a href="#seniors" data-p="seniors companies">선배·기업</a><a href="#faq" data-p="faq">자주 묻는 질문</a>
+  </nav>
+  <div class="seg" id="track"><button>취업</button><button class="on">통합</button><button>창업</button></div>
+</header>
+
+<main>
+<!-- 00 홈 -->
+<section class="page" id="p-home">
+  <div class="hero">
+    <a class="notice-strip" href="#guide/notice"><span class="tag danger">변경</span>11/4 (수) 취업 특강 시간이 15:00로 바뀌었어요<svg class="i" style="width:14px;height:14px"><use href="#i-r"/></svg></a>
+    <h1>교육 중에 궁금한 건, 바로 물어보세요</h1>
+    <p>출결·바우처·외부활동·수료까지, 탐나는 인재 지침을 근거로 AI가 바로 알려드려요</p>
+    <form class="composer" data-go="ask">
+      <textarea placeholder="출결, 바우처, 외부활동… 탐나는 인재 지침에 대해 무엇이든 물어보세요"></textarea>
+      <div class="row"><span class="src"><svg class="i"><use href="#i-file"/></svg>운영지침 2026 개정판 기준으로 답해요</span><button class="send" aria-label="보내기"><svg class="i" style="width:18px;height:18px"><use href="#i-up"/></svg></button></div>
+    </form>
+    <div class="chips"><a class="chip" href="#ask">외부활동 날 출결은?</a><a class="chip" href="#ask">바우처 사용 범위</a><a class="chip" href="#ask">수료 조건</a></div>
+  </div>
+  <p class="home-note">AI 답변은 틀릴 수 있어요 · 중요한 내용은 공식 공지로 확인해 주세요</p>
+</section>
+
+<!-- 01 AI에게 묻기 -->
+<section class="page" id="p-ask">
+  <div class="ask">
+    <aside class="hist">
+      <a class="btn secondary block" href="#ask"><svg class="i"><use href="#i-plus"/></svg>새 질문하기</a>
+      <span class="lbl">최근 질문</span>
+      <a class="on" href="#ask">외부활동 날에도 지문을 찍어야 하나요?</a>
+      <a href="#ask">바우처로 노트북 살 수 있어요?</a>
+      <a href="#ask">중간 평가 일정 알려줘</a>
+      <a href="#ask">수료 출석률 기준</a>
+    </aside>
+    <div class="thread"><div class="col">
+      <div class="umsg">외부활동 하는 날에도 센터에서 지문을 찍어야 하나요?</div>
+      <div class="amsg">
+        <span class="av"><svg class="i"><use href="#i-spark"/></svg></span>
+        <div class="abody">
+          <p>아니요. 외부활동 승인을 받은 날은 센터 지문 대신 ‘외부활동 확인서’로 출결을 처리해요. 활동이 끝난 뒤 3일 안에 담당 매니저에게 확인서를 내면 출석으로 인정돼요.</p>
+          <div class="cite">
+            <span class="h"><svg class="i" style="width:15px;height:15px"><use href="#i-file"/></svg>근거 · 운영지침 3장 3-4 외부활동</span>
+            <q>외부활동 승인을 받은 교육생은 해당 일의 출결을 외부활동 확인서 제출로 갈음한다. 확인서는 활동 종료 후 3일 이내에 제출한다.</q>
+            <a href="#ask" data-toast="원문 PDF의 해당 쪽이 열려요 (시안)">원문 PDF에서 이 조항 보기 <svg class="i" style="width:13px;height:13px"><use href="#i-ext"/></svg></a>
+          </div>
+          <div class="need"><span>필요한 서류</span><a class="chip" href="#guide/forms"><svg class="i" style="width:14px;height:14px"><use href="#i-dl"/></svg>외부활동 확인서 양식</a></div>
+          <div class="fb">도움이 됐나요? <button class="chip" data-toast="피드백 고마워요!">네</button><button class="chip" data-toast="매니저에게 이 질문이 전달돼요 (시안)">아니요</button><span class="sp"></span><a href="#guide/contact">담당 매니저에게 문의하기 <svg class="i" style="width:14px;height:14px"><use href="#i-r"/></svg></a></div>
+          <div><p class="lbl2">이어서 물어보기</p><div class="chips"><button class="chip">확인서 양식은 어디서 받아요?</button><button class="chip">외부활동 승인은 언제까지 받아야 해요?</button></div></div>
+        </div>
+      </div>
+      <form class="composer" style="margin-top:96px">
+        <textarea placeholder="추가로 궁금한 점을 물어보세요"></textarea>
+        <div class="row"><span class="src"><svg class="i"><use href="#i-file"/></svg>운영지침 2026 개정판 기준으로 답해요</span><button class="send" aria-label="보내기"><svg class="i" style="width:18px;height:18px"><use href="#i-up"/></svg></button></div>
+      </form>
+    </div></div>
+  </div>
+</section>
+
+<!-- 02 커리큘럼·일정 -->
+<section class="page" id="p-schedule">
+  <div class="wrap ph">
+    <div><h1>커리큘럼·일정</h1><p>탐나는 인재 전체 커리큘럼을 한 캘린더에서 보고, 내 구글 캘린더로 바로 가져가세요</p></div>
+    <div class="chips"><button class="btn secondary" data-toast=".ics 파일이 내려받아져요 (시안)"><svg class="i"><use href="#i-dl"/></svg>.ics 파일 받기</button><button class="btn primary" data-toast="구글 캘린더 구독 화면으로 이동해요 (시안)"><svg class="i"><use href="#i-cal"/></svg>구글 캘린더로 구독</button></div>
+  </div>
+  <div class="wrap toolbar">
+    <div class="chips" data-filter="cal"><button class="chip on" data-v="all">전체</button><button class="chip" data-v="brand">통합</button><button class="chip" data-v="emp">취업</button><button class="chip" data-v="start">창업</button></div>
+    <div class="legend"><span><i style="background:var(--brand-primary)"></i>통합</span><span><i style="background:var(--emp)"></i>취업</span><span><i style="background:var(--start)"></i>창업</span></div>
+  </div>
+  <div class="wrap sched">
+    <div class="card cal">
+      <div class="cal-h"><b>2026년 11월</b><div class="nv"><button aria-label="이전 달"><svg class="i"><use href="#i-l"/></svg></button><button aria-label="다음 달"><svg class="i"><use href="#i-r"/></svg></button></div></div>
+      <div class="cal-grid" id="cal"></div>
+    </div>
+    <div class="side">
+      <div class="card steps">
+        <div class="h"><b>커리큘럼 단계</b><span class="tag warn">예시</span></div>
+        <div class="step"><span class="num done">1</span><div><div class="t" style="color:var(--text-secondary)">공통 기초교육 <span class="tag">완료</span></div><p>9월 – 10월 · 자기 이해, 직무 탐색, 협업 기초</p></div></div>
+        <div class="step"><span class="num now">2</span><div><div class="t">트랙별 직무·창업 교육 <span class="tag brand">진행 중</span></div><p>11월 – 12월 · 취업: 직무 역량 / 창업: 아이템 검증</p></div></div>
+        <div class="step"><span class="num">3</span><div><div class="t">실전 프로젝트 <span class="tag">예정</span></div><p>1월 – 2월 · 기업 연계 프로젝트, 시제품 제작</p></div></div>
+        <div class="step"><span class="num">4</span><div><div class="t">수료 · 사후 관리 <span class="tag">예정</span></div><p>3월 · 수료 평가, 취·창업 연계</p></div></div>
+      </div>
+      <div class="gcal">
+        <div class="h"><svg class="i"><use href="#i-ref"/></svg>내 구글 캘린더로 가져가기</div>
+        <div class="gstep"><i>1</i>‘구글 캘린더로 구독’을 눌러요</div>
+        <div class="gstep"><i>2</i>구글 캘린더 화면에서 ‘추가’를 눌러요</div>
+        <div class="gstep"><i>3</i>일정이 바뀌면 내 캘린더에도 자동으로 반영돼요</div>
+        <button class="btn primary block" data-toast="구글 캘린더 구독 화면으로 이동해요 (시안)"><svg class="i"><use href="#i-cal"/></svg>구글 캘린더로 구독</button>
+        <small>트랙만 골라 구독하거나, 일정을 눌러 하나씩 ‘내 캘린더에 추가’할 수도 있어요. 아이폰·아웃룩은 .ics 파일을 쓰세요.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 센터 안내 -->
+<section class="page" id="p-guide">
+  <div class="wrap ph"><div><h1>센터 안내</h1><p>공지, 처음 왔을 때 할 일, 서류 양식, 문의처를 한곳에 모았어요</p></div></div>
+  <div class="wrap" style="padding-bottom:72px">
+    <nav class="tabs" id="guideTabs"><a href="#guide/notice" data-s="notice">공지 <span class="new-dot"></span></a><a href="#guide/start" data-s="start">처음 왔어요</a><a href="#guide/forms" data-s="forms">서류·양식</a><a href="#guide/contact" data-s="contact">문의처</a></nav>
+
+    <div class="gpane" data-s="notice">
+      <a class="nitem" href="#schedule"><span class="tag danger">변경</span><div><b>11/4 (수) 취업 특강 시간 변경: 14:00 → 15:00</b><small>장소는 3층 세미나실 그대로예요. 캘린더를 구독했다면 자동으로 바뀌어요.</small></div><time>11.03</time></a>
+      <a class="nitem" href="#ask"><span class="tag brand">중요</span><div><b>운영지침 2026 개정판 적용 안내</b><small>바뀐 점: 외부활동 확인서 제출 기한, 바우처 사전 승인 범위. AI 답변도 개정판 기준이에요.</small></div><time>11.01</time></a>
+      <a class="nitem" href="#guide/forms"><span class="tag warn">마감</span><div><b>10월 바우처 정산 11/18 (수)까지</b><small>정산서 양식은 서류·양식에서 받을 수 있어요</small></div><time>10.30</time></a>
+      <div class="nitem"><span class="tag">일반</span><div><b>11/6 (금) 동아리 활동 발표회 장소 안내</b><small>2층 라운지 · 16:00 시작</small></div><time>10.28</time></div>
+      <div class="nitem"><span class="tag">일반</span><div><b>11/14 (토) 시설 점검으로 회의실 예약 불가</b><small>개인 학습 공간은 정상 운영해요</small></div><time>10.25</time></div>
+    </div>
+
+    <div class="gpane" data-s="start">
+      <div class="start">
+        <div class="card checklist">
+          <div class="h"><b>첫 주 체크리스트</b><span class="muted" id="ckCount">0 / 5 완료</span></div>
+          <label><input type="checkbox">출입·지문 등록하기 <small>첫날 1층 안내 데스크</small></label>
+          <label><input type="checkbox">내 담당 매니저 확인하기 <a href="#guide/contact">문의처 보기</a></label>
+          <label><input type="checkbox">커리큘럼 캘린더 구독하기 <a href="#schedule">일정 보기</a></label>
+          <label><input type="checkbox">교육생 단체 메신저방 들어가기 <small>매니저가 첫 주에 초대해요</small></label>
+          <label><input type="checkbox">꼭 알아야 할 규칙 5가지 읽기 <small>오른쪽 목록</small></label>
+        </div>
+        <div class="card rules">
+          <div class="h"><b>꼭 알아야 할 규칙 5가지</b><span class="tag warn">예시</span></div>
+          <a href="#ask"><i>1</i><span><b>출결은 지문으로</b><small>입실·퇴실 모두 찍어야 출석으로 인정돼요</small></span></a>
+          <a href="#ask"><i>2</i><span><b>외부활동은 전날까지 승인</b><small>당일 신청은 인정되지 않아요</small></span></a>
+          <a href="#ask"><i>3</i><span><b>바우처는 쓰기 전에 승인</b><small>승인 없이 결제하면 정산이 안 될 수 있어요</small></span></a>
+          <a href="#ask"><i>4</i><span><b>결석·지각은 미리 연락</b><small>담당 매니저에게 사유와 함께 알려주세요</small></span></a>
+          <a href="#ask"><i>5</i><span><b>수료는 출석 + 평가</b><small>출석률과 평가 기준을 모두 채워야 해요</small></span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="gpane" data-s="forms">
+      <div class="frow fhead"><span>양식</span><span>언제 쓰나요</span><span>제출</span><span></span></div>
+      <div class="frow"><b>외부활동 신청서</b><span>교육 시간에 외부 활동이 있을 때</span><span>활동 전날까지 · 담당 매니저</span><button class="btn secondary" data-toast="외부활동 신청서.hwp를 내려받아요 (시안)"><svg class="i"><use href="#i-dl"/></svg>받기</button></div>
+      <div class="frow"><b>외부활동 확인서</b><span>외부활동을 마친 뒤 출석 인정용</span><span>활동 후 3일 이내 · 담당 매니저</span><button class="btn secondary" data-toast="외부활동 확인서.hwp를 내려받아요 (시안)"><svg class="i"><use href="#i-dl"/></svg>받기</button></div>
+      <div class="frow"><b>결석·조퇴 사유서</b><span>결석·조퇴·지각 사유를 낼 때</span><span>다음 출석일까지 · 담당 매니저</span><button class="btn secondary" data-toast="결석·조퇴 사유서.hwp를 내려받아요 (시안)"><svg class="i"><use href="#i-dl"/></svg>받기</button></div>
+      <div class="frow"><b>바우처 사용 승인 요청서</b><span>바우처로 결제하기 전에</span><span>결제 전 · 바우처 담당</span><button class="btn secondary" data-toast="바우처 사용 승인 요청서.hwp를 내려받아요 (시안)"><svg class="i"><use href="#i-dl"/></svg>받기</button></div>
+      <div class="frow"><b>바우처 정산서</b><span>한 달 사용 내역을 정산할 때</span><span>매월 정해진 날까지 · 바우처 담당</span><button class="btn secondary" data-toast="바우처 정산서.xlsx를 내려받아요 (시안)"><svg class="i"><use href="#i-dl"/></svg>받기</button></div>
+      <p class="note">양식 이름·제출 기한은 예시예요. 센터에서 실제 양식 파일과 최신 기한을 받아 채워요.</p>
+    </div>
+
+    <div class="gpane" data-s="contact">
+      <div class="grid g3">
+        <div class="card contact"><span class="tag brand">출결 · 외부활동</span><b>○○○ 매니저</b><p>센터 메신저 @aaa · 내선 000</p><small>평일 09:00 – 18:00</small></div>
+        <div class="card contact"><span class="tag brand">바우처 · 수당</span><b>○○○ 매니저</b><p>센터 메신저 @bbb · 내선 000</p><small>평일 09:00 – 18:00</small></div>
+        <div class="card contact"><span class="tag emp">취업 트랙</span><b>○○○ 매니저</b><p>센터 메신저 @ccc · 내선 000</p><small>평일 09:00 – 18:00</small></div>
+        <div class="card contact"><span class="tag start">창업 트랙</span><b>○○○ 매니저</b><p>센터 메신저 @ddd · 내선 000</p><small>평일 09:00 – 18:00</small></div>
+        <div class="card contact"><span class="tag">시설 · 기타</span><b>안내 데스크</b><p>1층 · 내선 000</p><small>평일 09:00 – 21:00</small></div>
+        <a class="card contact ai" href="#ask"><span class="tag brand">급하지 않다면</span><b>AI에게 먼저 물어보세요</b><p>지침에서 근거를 찾아 바로 알려드려요</p><span class="go">AI에게 묻기 <svg class="i" style="width:14px;height:14px"><use href="#i-right"/></svg></span></a>
+      </div>
+      <p class="note">담당자 이름·연락처는 센터 확인 후 채워요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 선배 사례·매칭 -->
+<section class="page" id="p-seniors">
+  <div class="wrap"><nav class="tabs sub"><a href="#seniors" class="on">선배 사례·매칭</a><a href="#companies">탐나는 기업</a></nav></div>
+  <div class="wrap ph">
+    <div><span class="tag warn" style="margin-bottom:10px">센터 협의 후 확정</span><h1>선배 사례·매칭</h1><p>같은 길을 먼저 걸은 선배 기수의 취·창업 경로를 보고, 궁금한 점은 선배에게 직접 물어보세요</p></div>
+  </div>
+  <div class="wrap">
+    <div class="callout"><b>확정 전 확인할 것</b><span>선배 실명·사진·회사명 공개 범위 · 본인 동의 받는 방법 · 매칭 신청을 누가 받아 연결할지 · 선배 풀 확보 방법</span></div>
+    <div class="toolbar">
+      <div class="chips" data-filter="senior"><button class="chip on" data-v="all">전체</button><button class="chip" data-v="emp">취업</button><button class="chip" data-v="start">창업</button></div>
+      <select class="chip" aria-label="기수"><option>기수 전체</option><option>6기</option><option>5기</option><option>4기</option></select>
+    </div>
+    <div class="grid g3" id="seniorGrid" style="padding-bottom:64px"></div>
+  </div>
+  <div class="match" id="match">
+    <div>
+      <h2>궁금한 점, 선배에게 직접 물어보세요</h2>
+      <p class="muted">질문을 남기면 비슷한 경로를 걸은 선배와 연결해 드려요.</p>
+      <div class="mstep"><span class="num">1</span><div><b>궁금한 점 남기기</b><p>관심 트랙과 묻고 싶은 내용을 적어요</p></div></div>
+      <div class="mstep"><span class="num">2</span><div><b>매니저가 선배 연결</b><p>담당 매니저가 경로가 비슷한 선배를 찾아 동의를 받아요</p></div></div>
+      <div class="mstep"><span class="num">3</span><div><b>답변 또는 커피챗</b><p>메시지 답변이나 짧은 만남으로 이야기를 나눠요</p></div></div>
+    </div>
+    <form class="card form" id="matchForm">
+      <div><label>관심 트랙</label><div class="seg" data-seg><button type="button" class="on">취업</button><button type="button">창업</button><button type="button">아직 모르겠어요</button></div></div>
+      <div><label for="mq">궁금한 점</label><textarea id="mq" placeholder="예) 비전공자인데 IT 기획 직무로 가려면 프로젝트를 어떻게 준비했나요?"></textarea></div>
+      <div><label for="mc">연락 받을 방법</label><input id="mc" placeholder="센터 메신저 아이디 또는 이메일"></div>
+      <button class="btn primary block">매칭 신청하기</button>
+      <small>신청 내용은 담당 매니저만 확인해요</small>
+    </form>
+  </div>
+</section>
+
+<!-- 05 탐나는 기업 -->
+<section class="page" id="p-companies">
+  <div class="wrap"><nav class="tabs sub"><a href="#seniors">선배 사례·매칭</a><a href="#companies" class="on">탐나는 기업</a></nav></div>
+  <div class="wrap ph">
+    <div><h1>탐나는 기업</h1><p>탐나는 인재와 함께하는 기업을 업종별로 살펴보고 채용 연계·인턴 정보를 확인하세요</p></div>
+  </div>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="chips" data-filter="co"><button class="chip on" data-v="all">전체</button><button class="chip" data-v="it">IT·플랫폼</button><button class="chip" data-v="tour">관광·서비스</button><button class="chip" data-v="food">제조·식품</button><button class="chip" data-v="media">콘텐츠·미디어</button></div>
+      <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="coSearch" placeholder="기업명으로 찾기"></label>
+    </div>
+    <div class="grid g3" id="coGrid"></div>
+    <p class="empty" id="coEmpty">조건에 맞는 기업이 없어요</p>
+    <div class="note">기업 정보는 센터가 제공한 자료로 채워요. 기업명·로고 사용 가능 여부와 채용 연계 정보 공개 범위는 센터 확인이 필요해요.</div>
+  </div>
+</section>
+
+<!-- 05 자주 묻는 질문 -->
+<section class="page" id="p-faq">
+  <div class="wrap ph">
+    <div><h1>자주 묻는 질문</h1><p>매니저가 확정한 답변만 모았어요. 찾는 답이 없으면 AI에게 물어보세요</p></div>
+  </div>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="chips" data-filter="faq"><button class="chip on" data-v="all">전체</button><button class="chip" data-v="출결">출결</button><button class="chip" data-v="평가">평가</button><button class="chip" data-v="바우처">바우처</button><button class="chip" data-v="외부활동">외부활동</button><button class="chip" data-v="수료">수료</button></div>
+      <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="faqSearch" placeholder="궁금한 내용을 검색해 보세요"></label>
+    </div>
+    <div class="faq" id="faqList"></div>
+    <p class="empty" id="faqEmpty">검색 결과가 없어요. AI에게 물어보세요</p>
+    <div class="cta"><div><b>찾는 답이 없나요?</b><p>AI에게 물어보면 지침에서 근거를 찾아 알려드려요</p></div><a class="btn primary" href="#ask">AI에게 묻기</a></div>
+  </div>
+</section>
+</main>
+
+<footer><b>AIDO · 더큰내일센터 탐나는 인재 교육생을 위한 동아리 시범 서비스</b><span><a href="#guide/contact">문의처</a> · <a href="#guide/forms">서류·양식</a> · AI 답변은 틀릴 수 있어요 · 화면의 문구·일정은 모두 예시예요</span></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const ic=(id,s=16)=>`<svg class="i" style="width:${s}px;height:${s}px"><use href="#${id}"/></svg>`;
+
+// Routing
+function route(){
+  const [id,sub]=(location.hash||'#home').slice(1).split('/');
+  const page=$('#p-'+id)?id:'home';
+  $$('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+page));
+  document.body.dataset.page=page;
+  $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.p.split(' ').includes(page)));
+  if(page==='guide'){const s=['notice','start','forms','contact'].includes(sub)?sub:'notice';
+    $$('#guideTabs a').forEach(a=>a.classList.toggle('on',a.dataset.s===s));
+    $$('#p-guide .gpane').forEach(p=>p.classList.toggle('on',p.dataset.s===s));}
+  window.scrollTo({top:0,behavior:'instant'});
+}
+addEventListener('hashchange',route); route();
+
+// Toast
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-toast]');if(b){e.preventDefault();toast(b.dataset.toast);}});
+
+// Segments (track switch + form)
+$$('.seg').forEach(seg=>seg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;e.preventDefault();$$('button',seg).forEach(x=>x.classList.toggle('on',x===b));if(seg.id==='track'){$$('.trk').forEach(s=>s.textContent=b.textContent);toast(b.textContent+' 트랙 기준으로 바꿨어요');}}));
+
+// Composer
+$$('form.composer').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();if(f.dataset.go)location.hash=f.dataset.go;else toast('시안이라 실제로 답하지 않아요');}));
+$('#matchForm').addEventListener('submit',e=>{e.preventDefault();toast('매칭 신청이 접수돼요 (시안이라 실제로 전송되지 않아요)');});
+
+// Calendar
+const EV={2:[['전체 조회','brand']],4:[['취업 특강 15:00','emp',1]],5:[['창업 2단계 점검','start']],6:[['동아리 발표회','brand']],11:[['직무 멘토링','emp']],13:[['IR 피칭 연습','start']],18:[['바우처 정산 마감','brand']],20:[['모의 면접','emp']],25:[['중간 평가','brand'],['포트폴리오 리뷰','emp']],27:[['데모데이 준비','start']]};
+const cal=$('#cal');
+['일','월','화','수','목','금','토'].forEach((d,i)=>cal.insertAdjacentHTML('beforeend',`<div class="wd${i?'':' sun'}">${d}</div>`));
+for(let d=1;d<=35;d++){ // 2026-11-01 is Sunday
+  const sun=(d-1)%7===0, real=d<=30;
+  cal.insertAdjacentHTML('beforeend',`<div class="day${sun?' sun':''}${d===6?' today':''}">${real?`<span>${d}</span>`+(EV[d]||[]).map(([t,c,chg])=>`<button class="evt ${c}${chg?' chg':''}" data-t="${c}" title="${t}" data-toast="${chg?'시간이 14:00 → 15:00로 바뀌었어요 · ':''}11월 ${d}일 ‘${t}’ · 내 캘린더에 추가할 수 있어요 (시안)">${t}</button>`).join(''):''}</div>`);
+}
+
+// Seniors
+const SEN=[['김','5기','emp','IT 서비스 기획 취업',['직무교육','팀 프로젝트','인턴','정규직'],'프로젝트 결과물을 포트폴리오로 바로 쓸 수 있었어요'],['이','5기','start','로컬 식품 브랜드 창업',['창업교육','시제품','지원사업 선정','법인 설립'],'아이템 검증 단계에서 매니저 피드백이 가장 도움이 됐어요'],['박','4기','emp','관광 플랫폼 마케터 취업',['직무교육','현장실습','채용 연계'],'현장실습 기업에 그대로 채용됐어요'],['최','4기','start','콘텐츠 스튜디오 창업',['창업교육','팀 빌딩','데모데이','첫 외주'],'데모데이에서 만난 기업이 첫 고객이 됐어요'],['정','6기','emp','제조기업 품질관리 취업',['직무교육','자격증','모의 면접','정규직'],'모의 면접을 세 번 본 게 실제 면접에서 컸어요'],['강','6기','start','여행 앱 MVP 개발 중',['창업교육','아이템 검증','MVP 제작'],'아직 진행 중이라 같이 고민할 후배를 찾고 있어요']];
+$('#seniorGrid').innerHTML=SEN.map(([n,g,t,h,p,q])=>`<div class="card senior" data-t="${t}"><div class="who"><span class="ava">${n}</span><div><b>${n}○○ 선배</b><small>${g} · ${t==='emp'?'취업':'창업'} 트랙</small></div></div><span class="tag ${t}" style="align-self:flex-start">${h}</span><div class="path">${p.map(x=>`<span>${x}</span>`).join('')}</div><q>${q}</q><a class="btn secondary block" href="#match">이 선배에게 질문하기</a></div>`).join('');
+// keep #match anchor inside seniors page
+$('#seniorGrid').addEventListener('click',e=>{const a=e.target.closest('a[href="#match"]');if(a){e.preventDefault();$('#match').scrollIntoView({behavior:'smooth'});$('#mq').focus({preventScroll:true});}});
+
+// Companies
+const CO=[['기업 A','it','IT·플랫폼','지역 기반 예약 플랫폼을 운영해요',['채용 연계','인턴'],2],['기업 B','tour','관광·서비스','체류형 여행 상품을 기획·운영해요',['인턴'],1],['기업 C','food','제조·식품','지역 농산물로 가공식품을 만들어요',['채용 연계'],3],['기업 D','media','콘텐츠·미디어','브랜드 영상과 숏폼 콘텐츠를 제작해요',['인턴','프로젝트'],0],['기업 E','it','IT·플랫폼','공공 데이터 기반 서비스를 개발해요',['채용 연계','프로젝트'],1],['기업 F','tour','관광·서비스','숙박·로컬 체험 브랜드를 운영해요',['채용 연계'],2]];
+$('#coGrid').innerHTML=CO.map(([n,c,cl,d,tags,s])=>`<div class="card co" data-t="${c}" data-n="${n}"><div class="top"><span class="logo-ph">LOGO</span><span class="tag">${cl}</span></div><b>${n} <span class="muted" style="font-size:13px;font-weight:400">(예시)</span></b><p>${d}</p><div class="tags">${tags.map(t=>`<span class="tag ${t==='채용 연계'?'brand':t==='인턴'?'start':''}">${t}</span>`).join('')}</div>${s?`<a class="go" href="#seniors">이 기업에서 일하는 선배 ${s}명 ${ic('i-right',14)}</a>`:`<span class="muted" style="font-size:13px">연결된 선배 사례 없음</span>`}</div>`).join('');
+
+// FAQ
+const FAQ=[['출결','외부활동 하는 날에도 지문을 찍어야 하나요?','아니요. 외부활동 승인을 받은 날은 ‘외부활동 확인서’로 출결을 처리해요. 활동 종료 후 3일 안에 담당 매니저에게 제출하세요.','운영지침 3-4','2026.11.03'],['바우처','바우처로 온라인 강의를 결제할 수 있나요?','직무와 관련된 온라인 강의는 사전 승인을 받으면 결제할 수 있어요. 결제 전 매니저에게 강의 링크를 보내 승인을 받아 주세요.','운영지침 5-2','2026.10.28'],['평가','중간 평가는 어떻게 진행되나요?','트랙별 과제 발표와 매니저 면담으로 진행돼요. 일정은 커리큘럼·일정 페이지에서 확인할 수 있어요.','운영지침 4-1','2026.10.20'],['출결','공휴일 다음 날은 지각 기준이 다른가요?','아니요. 공휴일 다음 날도 평소와 같은 기준이 적용돼요.','운영지침 3-1','2026.10.15'],['수료','수료하려면 출석률이 얼마나 필요해요?','수료 기준 출석률과 평가 기준을 모두 충족해야 해요. 정확한 기준은 근거 조항에서 확인해 주세요.','운영지침 6-1','2026.10.10'],['외부활동','외부활동 승인은 언제까지 받아야 해요?','활동 전날까지 신청서를 내고 승인을 받아야 해요. 당일 신청은 인정되지 않아요.','운영지침 3-4','2026.10.08']];
+$('#faqList').innerHTML=FAQ.map(([c,q,a,r,d],i)=>`<div class="qa${i?'':' open'}" data-t="${c}"><button><span class="q">Q</span><span class="qt">${q}</span><span class="tag">${c}</span><svg class="i chev"><use href="#i-chev"/></svg></button><div class="a">${a}<div class="meta"><span class="tag brand">근거 · ${r}</span>매니저 확정 · ${d}</div></div></div>`).join('');
+$('#faqList').addEventListener('click',e=>{const b=e.target.closest('.qa>button');if(b)b.parentElement.classList.toggle('open');});
+
+// Filters
+const state={cal:'all',senior:'all',co:'all',faq:'all'};
+function apply(){
+  $$('#cal .evt').forEach(el=>el.style.display=state.cal==='all'||el.dataset.t===state.cal?'':'none');
+  $$('#seniorGrid .senior').forEach(el=>el.style.display=state.senior==='all'||el.dataset.t===state.senior?'':'none');
+  const cq=$('#coSearch').value.trim();let cn=0;
+  $$('#coGrid .co').forEach(el=>{const ok=(state.co==='all'||el.dataset.t===state.co)&&el.dataset.n.includes(cq);el.style.display=ok?'':'none';cn+=ok;});
+  $('#coEmpty').style.display=cn?'none':'block';
+  const fq=$('#faqSearch').value.trim();let fn=0;
+  $$('#faqList .qa').forEach(el=>{const ok=(state.faq==='all'||el.dataset.t===state.faq)&&el.textContent.includes(fq);el.style.display=ok?'':'none';fn+=ok;});
+  $('#faqEmpty').style.display=fn?'none':'block';
+}
+$$('[data-filter]').forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',g).forEach(x=>x.classList.toggle('on',x===b));state[g.dataset.filter]=b.dataset.v;apply();}));
+// Checklist
+const cks=$$('.checklist input');cks.forEach(c=>c.addEventListener('change',()=>{$('#ckCount').textContent=cks.filter(x=>x.checked).length+' / '+cks.length+' 완료';}));
+
+$('#coSearch').addEventListener('input',apply);$('#faqSearch').addEventListener('input',apply);
+</script>
+</body>
+</html>
