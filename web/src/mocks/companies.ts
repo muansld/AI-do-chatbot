@@ -1,0 +1,61 @@
+/** 목 데이터 — 서비스(src/services) 밖에서는 직접 가져오지 않아요. */
+import type { Company } from "@/types/domain";
+
+// 기업 이름 · 숫자는 예시예요 (실제로는 센터 노션 기업 리스트에서 가져와요)
+export const companies: Company[] = [
+  {
+    id: "c-a",
+    name: "A 관광 플랫폼",
+    industry: "관광 · 여행",
+    role: "여행 상품 기획 · 마케팅",
+    programType: "internship",
+    tracks: ["general", "fast"],
+    headcount: 2,
+    location: "제주시",
+    status: "screening",
+  },
+  {
+    id: "c-b",
+    name: "B 감귤 가공",
+    industry: "식품 제조",
+    role: "온라인 판매 · 상세페이지",
+    programType: "practicum",
+    tracks: ["general"],
+    headcount: 1,
+    location: "서귀포시",
+    status: "screening",
+  },
+  {
+    id: "c-c",
+    name: "C 항공 서비스",
+    industry: "항공",
+    role: "지상 서비스 · 운영 지원",
+    programType: "internship",
+    tracks: ["general", "fast"],
+    headcount: 3,
+    location: "제주시",
+    status: "interview",
+  },
+  {
+    id: "c-e",
+    name: "E 로컬 브랜드",
+    industry: "리테일",
+    role: "브랜드 콘텐츠 · SNS",
+    programType: "practicum",
+    tracks: ["general"],
+    headcount: 2,
+    location: "제주시",
+    status: "extra-recruit",
+  },
+  {
+    id: "c-h",
+    name: "H 반도체",
+    industry: "제조",
+    role: "품질 관리 보조",
+    programType: "practicum",
+    tracks: ["general"],
+    headcount: 1,
+    location: "도외 (경기)",
+    status: "closed",
+  },
+];
