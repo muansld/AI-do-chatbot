@@ -7,13 +7,13 @@ import { cn } from "@/lib/cn";
 import { isActivePath, MANAGER_NAV, ROUTES } from "@/lib/constants/routes";
 import { SITE } from "@/lib/constants/site";
 
-/** 매니저 사이드바 (피그마 Manager Sidebar v2) — 메뉴는 3개로 고정이에요 */
+/** 매니저 사이드바 (피그마 Manager Sidebar v2 · 1단계) — 1단계 메뉴는 질문 분석 · 일정 2개예요 */
 export function ManagerSidebar() {
   const pathname = usePathname();
 
   return (
     <aside className="sticky top-0 flex h-dvh w-[248px] shrink-0 flex-col gap-2 border-r border-line bg-subtle px-5 py-6">
-      <Link href={ROUTES.manager.inbox} className="mb-4 flex flex-col">
+      <Link href={ROUTES.manager.insights} className="mb-4 flex flex-col">
         <span className="typo-heading-16">{SITE.name}</span>
         <span className="typo-caption-11 text-fg-secondary">매니저</span>
       </Link>

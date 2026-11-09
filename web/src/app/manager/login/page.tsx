@@ -30,7 +30,7 @@ export default function ManagerLoginPage() {
             className="h-12 rounded-lg border border-line-strong px-4 typo-body-15"
           />
         </label>
-        <ButtonLink href={ROUTES.manager.inbox} className="w-full py-3.5">
+        <ButtonLink href={ROUTES.manager.insights} className="w-full py-3.5">
           로그인
         </ButtonLink>
         <p className="typo-caption-12 text-fg-tertiary">교육생은 로그인 없이 바로 쓸 수 있어요.</p>

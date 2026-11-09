@@ -86,3 +86,40 @@ export interface ClubNews {
   ctaLabel: string;
   tone: "brand" | "dark" | "employment" | "startup";
 }
+
+/** 질문 주제 분류 (질문 분석 화면) */
+export type QuestionKind = "rule" | "schedule" | "personal-record" | "out-of-scope";
+
+/** 두가 답하지 못한 이유 */
+export type HandoffReason = "no-source" | "ambiguous" | "negative-feedback";
+
+export interface QuestionCluster {
+  id: string;
+  /** 비슷한 질문을 묶은 대표 질문 */
+  representative: string;
+  topic: string;
+  track: Track;
+  count: number;
+}
+
+export interface UnansweredQuestion {
+  id: string;
+  question: string;
+  reason: HandoffReason;
+  track: Track;
+  /** ISO 날짜 · 시간 */
+  askedAt: string;
+}
+
+export interface QuestionInsights {
+  totalQuestions: number;
+  weekOverWeekPercent: number;
+  answeredRate: number;
+  handoffCount: number;
+  handoffBreakdown: { noSource: number; ambiguous: number };
+  negativeFeedback: { count: number; total: number };
+  topQuestions: QuestionCluster[];
+  kindRatio: Record<QuestionKind, number>;
+  trackRatio: Record<Track, number>;
+  unanswered: UnansweredQuestion[];
+}

@@ -52,7 +52,7 @@ web/
    │  │  └─ clubs/            /clubs/*              S6 동아리 · 만든 사람들 · 부스 상세
    │  ├─ manager/
    │  │  ├─ login/            /manager/login        M0 로그인 (사이드바 없음)
-   │  │  └─ (console)/        /manager/*            M1~M3 (사이드바 레이아웃)
+   │  │  └─ (console)/        /manager/*            1단계: M4 질문 분석 · M3 일정 (사이드바 레이아웃)
    │  ├─ layout.tsx           루트 레이아웃 (글꼴 · 메타데이터)
    │  ├─ error.tsx            E2 오류
    │  └─ not-found.tsx        E1 404
@@ -71,15 +71,18 @@ web/
 
 ### 화면 ↔ 경로
 
-| 피그마                                                  | 경로                                                                                                                                    |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| S1 홈 · Mo-1                                            | `/`                                                                                                                                     |
-| S2 AI에게 묻기 · Mo-2                                   | `/ask`                                                                                                                                  |
-| S3 · S3-1 커리큘럼·일정 · Mo-3                          | `/schedule`                                                                                                                             |
-| S4 공지 · S4-2 기업 · S4-1 FAQ · Mo-4                   | `/center` · `/center/companies` · `/center/faq` · `/center/forms` · `/center/contact`                                                   |
-| S6 동아리 · S6-1 만든 사람들 · S6-3 부스 상세           | `/clubs` · `/clubs/makers` · `/clubs/booths/[boothId]`                                                                                  |
-| M0 로그인                                               | `/manager/login`                                                                                                                        |
-| M1 질문함 · M2 공지·자료 · M2-1 · M2-2 · M2-3 · M3 일정 | `/manager/inbox` · `/manager/notices` · `/manager/notices/review` · `/manager/cohorts/new` · `/manager/companies` · `/manager/schedule` |
+| 피그마                                        | 경로                                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| S1 홈 · Mo-1                                  | `/`                                                                                   |
+| S2 AI에게 묻기 · Mo-2                         | `/ask`                                                                                |
+| S3 · S3-1 커리큘럼·일정 · Mo-3                | `/schedule`                                                                           |
+| S4 공지 · S4-2 기업 · S4-1 FAQ · Mo-4         | `/center` · `/center/companies` · `/center/faq` · `/center/forms` · `/center/contact` |
+| S6 동아리 · S6-1 만든 사람들 · S6-3 부스 상세 | `/clubs` · `/clubs/makers` · `/clubs/booths/[boothId]`                                |
+| M0 로그인                                     | `/manager/login`                                                                      |
+| M4 질문 분석 · M3 일정 (매니저 · 1단계)       | `/manager/insights` · `/manager/schedule`                                             |
+
+> **매니저 범위 (11/9 정리)**: 프로젝트 기간 안에는 매니저 **1단계**(로그인 · 질문 분석 · 일정)만 만들어요.
+> 질문함 답변 등록(M1) · 공지·자료(M2) · 가이드북 확인(M2-1) · 새 기수(M2-2) · 기업 리스트(M2-3)는 **2단계(보류)**예요. 피그마 `03-2 v2 매니저 · 2단계 (보류)` 섹션에 보관돼 있어요.
 
 ## 백엔드 · AI 서버를 붙일 때
 

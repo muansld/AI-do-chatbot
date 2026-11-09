@@ -13,8 +13,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // /manager 로 들어오면 질문함으로 보내요
-      { source: "/manager", destination: "/manager/inbox", permanent: false },
+      // /manager 로 들어오면 질문 분석으로 보내요
+      { source: "/manager", destination: "/manager/insights", permanent: false },
     ];
   },
 };

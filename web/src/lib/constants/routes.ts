@@ -18,13 +18,13 @@ export const ROUTES = {
     makers: "/clubs/makers", // S6-1
     booth: (boothId: string) => `/clubs/booths/${boothId}`, // S6-3
   },
+  /**
+   * 매니저 · 1단계 (11/9 범위 정리): 로그인 · 질문 분석 · 일정만 만들어요.
+   * 2단계(보류): 질문함 답변 등록 M1 · 공지·자료 M2 · 가이드북 확인 M2-1 · 새 기수 M2-2 · 기업 리스트 M2-3
+   */
   manager: {
     login: "/manager/login", // M0
-    inbox: "/manager/inbox", // M1
-    notices: "/manager/notices", // M2
-    guidebookReview: "/manager/notices/review", // M2-1
-    newCohort: "/manager/cohorts/new", // M2-2
-    companies: "/manager/companies", // M2-3
+    insights: "/manager/insights", // M4 질문 분석 (보기 전용)
     schedule: "/manager/schedule", // M3
   },
 } as const;
@@ -52,13 +52,9 @@ export const CENTER_TABS: NavItem[] = [
   { label: "문의 방법", href: ROUTES.center.contact },
 ];
 
+/** 매니저 · 1단계 메뉴 (피그마 Manager Sidebar v2 · 1단계) */
 export const MANAGER_NAV: NavItem[] = [
-  { label: "질문함", href: ROUTES.manager.inbox, matchPrefix: ROUTES.manager.inbox },
-  {
-    label: "공지·자료",
-    href: ROUTES.manager.notices,
-    matchPrefix: ROUTES.manager.notices,
-  },
+  { label: "질문 분석", href: ROUTES.manager.insights, matchPrefix: ROUTES.manager.insights },
   { label: "일정", href: ROUTES.manager.schedule, matchPrefix: ROUTES.manager.schedule },
 ];
 
