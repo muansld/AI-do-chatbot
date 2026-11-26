@@ -9,7 +9,7 @@ export default function NotFound() {
       <EmptyState
         title="찾는 페이지가 없어요"
         description={
-          "주소가 바뀌었거나 지난 기수 자료일 수 있어요.\n홈에서 다시 찾거나 두에게 물어보세요."
+          "주소가 바뀌었거나 지난 기수 자료일 수 있어요.\n홈에서 두(DO)에게 다시 물어보세요."
         }
         actions={
           <>

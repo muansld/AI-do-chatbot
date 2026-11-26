@@ -3,8 +3,8 @@
 import { Tag } from "@/components/ui/Tag";
 import type { TagTone } from "@/components/ui/Tag";
 import { usePreferences } from "@/features/preferences/store";
-import { TRACK_LABEL } from "@/lib/constants/site";
-import { matchesTrack } from "@/lib/track";
+import { SCOPE_LABEL } from "@/lib/constants/site";
+import { matchesScope } from "@/lib/scope";
 import type { ScheduleCategory, ScheduleEvent } from "@/types/domain";
 
 const CATEGORY: Record<ScheduleCategory, { label: string; tone: TagTone }> = {
@@ -23,22 +23,22 @@ const dateFormat = new Intl.DateTimeFormat("ko-KR", {
 });
 
 interface ScheduleEventListProps {
-  /** 서버에서 받은 전체 일정. 고른 기수 · 트랙으로 여기서 걸러요. */
+  /** 서버에서 받은 전체 일정. 고른 기수 · 범위로 여기서 걸러요. */
   events: ScheduleEvent[];
 }
 
 export function ScheduleEventList({ events }: ScheduleEventListProps) {
-  const { cohortId, track } = usePreferences();
-  const visible = events.filter((e) => e.cohortId === cohortId && matchesTrack(e.track, track));
+  const { cohortId, scope } = usePreferences();
+  const visible = events.filter((e) => e.cohortId === cohortId && matchesScope(e.scope, scope));
 
   return (
     <section aria-label="일정 목록" className="flex flex-col gap-3">
       <p className="typo-body-13 text-fg-secondary">
-        {cohortId}기 · {TRACK_LABEL[track]} 기준 · {visible.length}개
+        {cohortId}기 · {SCOPE_LABEL[scope]} 기준 · {visible.length}개
       </p>
       {visible.length === 0 ? (
         <p className="rounded-xl bg-subtle px-5 py-8 text-center typo-body-14 text-fg-secondary">
-          이 기수 · 트랙에 등록된 일정이 없어요
+          이 기수 · 범위에 등록된 일정이 없어요
         </p>
       ) : (
         <ul className="divide-y divide-line rounded-xl border border-line bg-surface">

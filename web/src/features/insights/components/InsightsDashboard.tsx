@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Tag } from "@/components/ui/Tag";
 import type { TagTone } from "@/components/ui/Tag";
 import { cn } from "@/lib/cn";
-import { TRACK_LABEL, TRACK_ORDER } from "@/lib/constants/site";
+import { SCOPE_LABEL, SCOPE_ORDER } from "@/lib/constants/site";
 import type { HandoffReason, QuestionInsights, QuestionKind } from "@/types/domain";
 
 const KIND_LABEL: Record<QuestionKind, string> = {
@@ -19,7 +19,7 @@ const REASON: Record<HandoffReason, { label: string; tone: TagTone }> = {
   "negative-feedback": { label: "“아니요” 피드백", tone: "neutral" },
 };
 
-const TRACK_BAR = { integrated: "bg-brand", employment: "bg-employment", startup: "bg-startup" };
+const SCOPE_BAR = { common: "bg-brand", employment: "bg-employment", startup: "bg-startup" };
 
 const numberFormat = new Intl.NumberFormat("ko-KR");
 const timeFormat = new Intl.DateTimeFormat("ko-KR", {
@@ -109,8 +109,8 @@ export function InsightsDashboard({ data }: { data: QuestionInsights }) {
                 </span>
                 <span className="flex-1 typo-body-14-medium">{q.representative}</span>
                 <Tag>{q.topic}</Tag>
-                <Tag tone={q.track === "employment" ? "warning" : "neutral"}>
-                  {TRACK_LABEL[q.track]}
+                <Tag tone={q.scope === "employment" ? "warning" : "neutral"}>
+                  {SCOPE_LABEL[q.scope]}
                 </Tag>
                 <div className="w-28">
                   <Bar
@@ -139,14 +139,14 @@ export function InsightsDashboard({ data }: { data: QuestionInsights }) {
             </div>
           ))}
           <hr className="border-line" />
-          <h2 className="typo-heading-16">트랙별</h2>
-          {TRACK_ORDER.map((track) => (
-            <div key={track} className="flex flex-col gap-1.5">
+          <h2 className="typo-heading-16">범위별</h2>
+          {SCOPE_ORDER.map((scope) => (
+            <div key={scope} className="flex flex-col gap-1.5">
               <div className="flex justify-between typo-body-13">
-                <span>{TRACK_LABEL[track]}</span>
-                <span className="typo-body-13-medium">{data.trackRatio[track]}%</span>
+                <span>{SCOPE_LABEL[scope]}</span>
+                <span className="typo-body-13-medium">{data.scopeRatio[scope]}%</span>
               </div>
-              <Bar percent={data.trackRatio[track]} className={TRACK_BAR[track]} />
+              <Bar percent={data.scopeRatio[scope]} className={SCOPE_BAR[scope]} />
             </div>
           ))}
         </Card>
@@ -162,8 +162,8 @@ export function InsightsDashboard({ data }: { data: QuestionInsights }) {
             <li key={u.id} className="flex items-center gap-3 py-3">
               <span className="flex-1 typo-body-14">{u.question}</span>
               <Tag tone={REASON[u.reason].tone}>{REASON[u.reason].label}</Tag>
-              <Tag tone={u.track === "employment" ? "warning" : "neutral"}>
-                {TRACK_LABEL[u.track]}
+              <Tag tone={u.scope === "employment" ? "warning" : "neutral"}>
+                {SCOPE_LABEL[u.scope]}
               </Tag>
               <time dateTime={u.askedAt} className="typo-caption-12 text-fg-tertiary">
                 {timeFormat.format(new Date(u.askedAt))}

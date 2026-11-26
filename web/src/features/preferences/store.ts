@@ -2,21 +2,21 @@
 
 import { useCallback, useSyncExternalStore } from "react";
 
-import type { CohortId, Track } from "@/types/domain";
+import type { CohortId, Scope } from "@/types/domain";
 
 /**
- * 교육생이 고른 기수 · 트랙을 브라우저(localStorage)에만 저장해요. 로그인은 없어요.
+ * 교육생이 고른 기수 · 범위(취업 · 창업 · 공통)를 브라우저(localStorage)에만 저장해요. 로그인은 없어요.
  * useSyncExternalStore 로 읽어서 서버 렌더링(기본값)과 브라우저 값이 어긋나지 않게 해요.
  */
 export interface Preferences {
   cohortId: CohortId;
-  track: Track;
+  scope: Scope;
 }
 
 const STORAGE_KEY = "aido:preferences";
-export const DEFAULT_PREFERENCES: Preferences = { cohortId: 13, track: "integrated" };
+export const DEFAULT_PREFERENCES: Preferences = { cohortId: 13, scope: "common" };
 
-const TRACKS: Track[] = ["employment", "integrated", "startup"];
+const SCOPES: Scope[] = ["employment", "startup", "common"];
 const listeners = new Set<() => void>();
 let cache: { raw: string | null; value: Preferences } = { raw: null, value: DEFAULT_PREFERENCES };
 
@@ -26,9 +26,9 @@ function parse(raw: string | null): Preferences {
     const data = JSON.parse(raw) as Partial<Preferences>;
     return {
       cohortId: typeof data.cohortId === "number" ? data.cohortId : DEFAULT_PREFERENCES.cohortId,
-      track: TRACKS.includes(data.track as Track)
-        ? (data.track as Track)
-        : DEFAULT_PREFERENCES.track,
+      scope: SCOPES.includes(data.scope as Scope)
+        ? (data.scope as Scope)
+        : DEFAULT_PREFERENCES.scope,
     };
   } catch {
     return DEFAULT_PREFERENCES;
@@ -72,11 +72,11 @@ function write(next: Preferences): void {
 export function usePreferences() {
   const preferences = useSyncExternalStore(subscribe, readSnapshot, () => DEFAULT_PREFERENCES);
 
-  const setTrack = useCallback((track: Track) => write({ ...readSnapshot(), track }), []);
+  const setScope = useCallback((scope: Scope) => write({ ...readSnapshot(), scope }), []);
   const setCohortId = useCallback(
     (cohortId: CohortId) => write({ ...readSnapshot(), cohortId }),
     [],
   );
 
-  return { ...preferences, setTrack, setCohortId };
+  return { ...preferences, setScope, setCohortId };
 }

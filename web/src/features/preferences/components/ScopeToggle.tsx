@@ -1,28 +1,28 @@
 "use client";
 
 import { usePreferences } from "@/features/preferences/store";
-import { TRACK_LABEL, TRACK_ORDER } from "@/lib/constants/site";
 import { cn } from "@/lib/cn";
+import { SCOPE_LABEL, SCOPE_ORDER } from "@/lib/constants/site";
 
-interface TrackToggleProps {
+interface ScopeToggleProps {
   size?: "md" | "sm";
 }
 
-/** 취업 · 통합 · 창업 토글 (피그마 Track Toggle) */
-export function TrackToggle({ size = "md" }: TrackToggleProps) {
-  const { track, setTrack } = usePreferences();
+/** 취업 · 창업 · 공통 범위 칩 (피그마 Composer v3 안의 Track Segment) */
+export function ScopeToggle({ size = "sm" }: ScopeToggleProps) {
+  const { scope, setScope } = usePreferences();
 
   return (
-    <div role="radiogroup" aria-label="트랙" className="flex rounded-full bg-muted p-[3px]">
-      {TRACK_ORDER.map((value) => {
-        const selected = track === value;
+    <div role="radiogroup" aria-label="질문 범위" className="flex rounded-full bg-muted p-[3px]">
+      {SCOPE_ORDER.map((value) => {
+        const selected = scope === value;
         return (
           <button
             key={value}
             type="button"
             role="radio"
             aria-checked={selected}
-            onClick={() => setTrack(value)}
+            onClick={() => setScope(value)}
             className={cn(
               "rounded-full transition-colors",
               size === "md"
@@ -33,7 +33,7 @@ export function TrackToggle({ size = "md" }: TrackToggleProps) {
                 : "text-fg-tertiary hover:text-fg-secondary",
             )}
           >
-            {TRACK_LABEL[value]}
+            {SCOPE_LABEL[value]}
           </button>
         );
       })}

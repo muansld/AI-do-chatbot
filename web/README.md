@@ -1,7 +1,7 @@
 # 탐나는 AI:DO — web
 
 제주더큰내일센터 탐나는인재를 위한 AI 길잡이 홈페이지의 프런트엔드예요.
-디자인 원본은 피그마 `탐나는AI-DO` 파일의 **example2** 페이지예요.
+디자인 원본은 피그마 `탐나는AI-DO` 파일의 **탐나는 AI:DO**(교육생) · **매니저** 페이지예요. 파일 안내는 Component 페이지의 `00 READ ME`에 있어요.
 
 > 백엔드 · AI 서버 연동은 아직 하지 않아요. 데이터는 `src/mocks`의 목 데이터를 `src/services`를 거쳐서만 써요.
 
@@ -38,51 +38,62 @@ Node.js 20.9 이상이 필요해요.
 
 ## 폴더 구조
 
+라우트는 `app/`, 기능 코드는 `features/`, 데이터는 `services/`에 두는 구조예요. 자세한 규칙은 [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md)를 봐요.
+
 ```
 web/
-├─ docs/CONVENTIONS.md        코드 규칙 (꼭 읽어 주세요)
-├─ public/                    정적 파일 (이미지 · 아이콘)
+├─ docs/CONVENTIONS.md            코드 규칙 (꼭 읽어 주세요)
+├─ public/                        정적 파일 (이미지 · 아이콘)
 └─ src/
-   ├─ app/                    라우트만 둬요 (page · layout · error · not-found)
-   │  ├─ (student)/           교육생 화면 — 상단 바 · 푸터 · 모바일 탭 공통 레이아웃
-   │  │  ├─ page.tsx          /                     S1 홈
-   │  │  ├─ ask/              /ask                  S2 AI에게 묻기
-   │  │  ├─ schedule/         /schedule             S3 · S3-1 커리큘럼·일정
-   │  │  ├─ center/           /center/*             S4 센터 안내 (공지 · 기업 · FAQ · 서류 · 문의)
-   │  │  └─ clubs/            /clubs/*              S6 동아리 · 만든 사람들 · 부스 상세
+   ├─ app/                        라우트 파일만 (page · layout · loading · error · not-found)
+   │  ├─ (student)/
+   │  │  ├─ page.tsx              /                         S1 홈 (헤더 · 푸터 없음)
+   │  │  └─ (shell)/              헤더 + 푸터 레이아웃 (URL에는 안 나와요)
+   │  │     ├─ ask/               /ask                      S2 새 질문
+   │  │     │  ├─ [threadId]/     /ask/t-attendance         S2 · S2-1 ~ S2-10 대화
+   │  │     │  └─ loading.tsx                               S2-2 답변 작성 중
+   │  │     └─ schedule/          /schedule                 S3 · S3-1 ~ S3-6 센터 일정
    │  ├─ manager/
-   │  │  ├─ login/            /manager/login        M0 로그인 (사이드바 없음)
-   │  │  └─ (console)/        /manager/*            1단계: M4 질문 분석 · M3 일정 (사이드바 레이아웃)
-   │  ├─ layout.tsx           루트 레이아웃 (글꼴 · 메타데이터)
-   │  ├─ error.tsx            E2 오류
-   │  └─ not-found.tsx        E1 404
+   │  │  ├─ login/                /manager/login            M0 로그인 (사이드바 없음)
+   │  │  └─ (console)/            매니저 사이드바 레이아웃
+   │  │     ├─ insights/          /manager/insights         M4 질문 분석
+   │  │     │  └─ [questionId]/   /manager/insights/q-…     M4-1 질문 상세 · 처리
+   │  │     └─ schedule/          /manager/schedule         M3 일정
+   │  │        └─ import/         /manager/schedule/import  M5-1 새 기수 등록 → review(M5-2) → publish(M5-3)
+   │  ├─ layout.tsx               루트 레이아웃 (글꼴 · 메타데이터)
+   │  ├─ error.tsx                E2 연결 오류
+   │  └─ not-found.tsx            E1 404
    ├─ components/
-   │  ├─ ui/                  도메인을 모르는 공용 부품 (Button · Tag · EmptyState)
-   │  └─ layout/              화면 틀 (SiteHeader · SiteFooter · MobileTabBar · ManagerSidebar)
-   ├─ features/               도메인별 기능 (컴포넌트 · 훅 · 상태)
-   │  ├─ preferences/         기수 · 트랙 선택 (브라우저 저장)
-   │  ├─ schedule/ center/ clubs/ …
-   ├─ services/               데이터 접근 계층 — 지금은 목 데이터, 나중에 API로 교체
-   ├─ mocks/                  목 데이터 (services 에서만 가져와요)
-   ├─ types/                  도메인 타입
-   ├─ lib/                    유틸 · 상수 (cn, routes, site, track)
-   └─ styles/tokens.css       피그마 디자인 토큰
+   │  ├─ ui/                      도메인을 모르는 공용 부품 (Button · Tag · EmptyState · ScreenPlaceholder)
+   │  └─ layout/                  화면 틀 (SiteHeader · MainNav · NavLinks · SiteFooter · ManagerSidebar · PageHeader)
+   ├─ features/                   도메인별 기능 (components · hooks · store · utils)
+   │  ├─ preferences/             기수 · 범위(취업 · 창업 · 공통) 선택 — 브라우저 저장
+   │  ├─ schedule/                센터 일정
+   │  └─ insights/                매니저 질문 분석
+   │     (ask · schedule-import 는 화면을 옮기면서 만들어요)
+   ├─ services/                   데이터 접근 계층 — 지금은 목 데이터, 나중에 API로 교체
+   │                              threads · guidebooks · schedule · cohorts · insights
+   ├─ mocks/                      목 데이터 (services 에서만 가져와요)
+   ├─ types/domain.ts             도메인 타입 (Track · Scope · ChatThread · AnswerStatus …)
+   ├─ lib/                        순수 함수 · 상수 (cn · scope · constants/routes · constants/site)
+   └─ styles/tokens.css           피그마 foundation 변수 → 디자인 토큰
 ```
 
 ### 화면 ↔ 경로
 
-| 피그마                                        | 경로                                                                                  |
-| --------------------------------------------- | ------------------------------------------------------------------------------------- |
-| S1 홈 · Mo-1                                  | `/`                                                                                   |
-| S2 AI에게 묻기 · Mo-2                         | `/ask`                                                                                |
-| S3 · S3-1 커리큘럼·일정 · Mo-3                | `/schedule`                                                                           |
-| S4 공지 · S4-2 기업 · S4-1 FAQ · Mo-4         | `/center` · `/center/companies` · `/center/faq` · `/center/forms` · `/center/contact` |
-| S6 동아리 · S6-1 만든 사람들 · S6-3 부스 상세 | `/clubs` · `/clubs/makers` · `/clubs/booths/[boothId]`                                |
-| M0 로그인                                     | `/manager/login`                                                                      |
-| M4 질문 분석 · M3 일정 (매니저 · 1단계)       | `/manager/insights` · `/manager/schedule`                                             |
+| 피그마                                             | 경로                                                              |
+| -------------------------------------------------- | ----------------------------------------------------------------- |
+| S1 홈                                              | `/`                                                               |
+| S2 AI에게 묻기 (새 질문)                           | `/ask`                                                            |
+| S2 · S2-1 ~ S2-10 대화 · 원문 PDF · 근거 못 찾음 … | `/ask/[threadId]` (원문 PDF는 `?source=employment&page=46`)       |
+| S2-2 답변 작성 중                                  | `/ask` 구간의 `loading.tsx`                                       |
+| S3 · S3-1 ~ S3-6 센터 일정                         | `/schedule` (`?view=employment&cohort=13&month=2026-11`)          |
+| M0 로그인                                          | `/manager/login`                                                  |
+| M4 질문 분석 · M4-1 질문 상세                      | `/manager/insights` · `/manager/insights/[questionId]`            |
+| M3 일정 · M5-1 ~ M5-3 새 기수 등록                 | `/manager/schedule` · `/manager/schedule/import/{review,publish}` |
 
-> **매니저 범위 (11/9 정리)**: 프로젝트 기간 안에는 매니저 **1단계**(로그인 · 질문 분석 · 일정)만 만들어요.
-> 질문함 답변 등록(M1) · 공지·자료(M2) · 가이드북 확인(M2-1) · 새 기수(M2-2) · 기업 리스트(M2-3)는 **2단계(보류)**예요. 피그마 `03-2 v2 매니저 · 2단계 (보류)` 섹션에 보관돼 있어요.
+> 없앤 화면: 동아리 · 실습·인턴십 기업 리스트 · 자주 묻는 질문 · 센터 안내 · 모바일 전용 화면.
+> 매니저 2단계(질문함 답변 등록 · 공지·자료)는 보류예요.
 
 ## 백엔드 · AI 서버를 붙일 때
 

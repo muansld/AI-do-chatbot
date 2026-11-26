@@ -8,7 +8,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-02",
     title: "커뮤니케이션 스킬",
     category: "training",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -16,7 +16,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-03",
     title: "최종발표 · 피드백",
     category: "project",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -24,7 +24,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-05",
     title: "직무별 현직자 멘토링",
     category: "training",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -32,7 +32,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-09",
     title: "서류 제출 마감",
     category: "milestone",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
     timeLabel: "09:00",
   },
@@ -41,7 +41,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-10",
     title: "기업 밋업",
     category: "training",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
     timeLabel: "오전 · 오후",
   },
@@ -50,7 +50,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-11",
     title: "진로면담",
     category: "care",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -58,7 +58,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-13",
     title: "중간평가 · 피드백",
     category: "project",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -66,7 +66,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-17",
     title: "실습 · 인턴십 기업 면접 시작",
     category: "milestone",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -74,7 +74,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-26",
     title: "직무교육 성과공유회",
     category: "milestone",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -82,7 +82,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-27",
     title: "심리상담 · 노무교육",
     category: "care",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -90,7 +90,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-30",
     title: "직무교육 이수 행사",
     category: "milestone",
-    track: "employment",
+    scope: "employment",
     cohortId: 13,
   },
   {
@@ -98,7 +98,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-26",
     title: "1회 진입심의 (과정평가)",
     category: "milestone",
-    track: "startup",
+    scope: "startup",
     cohortId: 13,
   },
   {
@@ -106,7 +106,7 @@ export const scheduleEvents: ScheduleEvent[] = [
     date: "2026-11-30",
     title: "창업실무과정 시작",
     category: "milestone",
-    track: "startup",
+    scope: "startup",
     cohortId: 13,
   },
 ];

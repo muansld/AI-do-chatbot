@@ -14,7 +14,7 @@ export default async function ManagerInsightsPage() {
     <div className="flex flex-col gap-8">
       <PageHeader
         title="질문 분석"
-        description="교육생이 두에게 무엇을 묻는지, 두가 답하지 못한 질문은 무엇인지 보여 줘요."
+        description="교육생이 두(DO)에게 무엇을 묻는지, 두(DO)가 답하지 못한 질문은 무엇인지 보여 줘요."
       />
       <InsightsDashboard data={data} />
     </div>
